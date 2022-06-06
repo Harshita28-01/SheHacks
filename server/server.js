@@ -33,7 +33,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 mongoose.connect(process.env.MONGOOSE_CONNECT)
-
+PORT=process.env.PORT || 3001;
 const userSchema = new mongoose.Schema({
   email: String,
   password: String
@@ -198,7 +198,7 @@ app.post('/productfind', function (req, res) {
 })
 
 if (process.env.NODE_ENV == "production") {
-  app.get(`*`, (req, res) => {
+  app.get(`/`, (req, res) => {
     app.use(express.static(path.join(__dirname,"/client/build")));
     res.sendFile(path.join(__dirname,"client","build","index.html"));
   })
@@ -212,7 +212,7 @@ else{
     res.send("Hello");
   });
 }
- PORT=process.env.PORT || 3001;
+
 app.listen(PORT, function (err) {
   if (err) {
     console.log(err)
