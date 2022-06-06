@@ -20,7 +20,7 @@ function Login ({ loginUser }) {
   }
   const loginDataSend = () => {
     axios.post('/login', user).then(res => {
-      if (user.email != null) {
+      if (res.email != null) {
         loginUser(user.email)
         localStorage.setItem('user', user.email)
         navigate('/', { replace: true })

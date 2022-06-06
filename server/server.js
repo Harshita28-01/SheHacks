@@ -82,10 +82,9 @@ passport.use(
 app.post('/login', function (req, res) {
   const email1 = req.body.email
   const password1 = req.body.password
-
   User.findOne({ email: email1 }, function (err, foundUser) {
     if (err) {
-      console.log(err)
+      console.log(err);
     } else {
       if (foundUser) {
         bcypt.compare(password1, foundUser.password, function (err, result) {
@@ -198,11 +197,20 @@ app.post('/productfind', function (req, res) {
   })
 })
 
-if (process.env.NODE_ENV === 'production') {
-  app.get('/', (req, res) => {
-    app.use(express.static(path.resolve(__dirname, 'client', 'build')))
-    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
+if (process.env.NODE_ENV == "production") {
+  app.get("/", (req, res) => {
+    app.use(express.static(path.join(__dirname,"/client/build")));
+    res.sendFile(path.join(__dirname,"client","build","index.html"));
   })
+  app.get("/shopkeeper", (req, res) => {
+    app.use(express.static(path.join(__dirname,"/client/build")));
+    res.sendFile(path.join(__dirname,"client","build","index.html"));
+  })
+}
+else{
+  app.get("/",function(req,res){
+    res.send("Hello");
+  });
 }
 
 app.listen(process.env.PORT || 5000, function (err) {
