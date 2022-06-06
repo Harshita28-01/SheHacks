@@ -32,7 +32,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect(process.env.MONGOOSE_CONNECT, { useNewUrlParser: true })
+mongoose.connect(process.env.MONGOOSE_CONNECT)
 
 const userSchema = new mongoose.Schema({
   email: String,
@@ -198,25 +198,25 @@ app.post('/productfind', function (req, res) {
 })
 
 if (process.env.NODE_ENV == "production") {
-  app.get("/", (req, res) => {
+  app.get(`*`, (req, res) => {
     app.use(express.static(path.join(__dirname,"/client/build")));
     res.sendFile(path.join(__dirname,"client","build","index.html"));
   })
-  app.get("/shopkeeper", (req, res) => {
-    app.use(express.static(path.join(__dirname,"/client/build")));
-    res.sendFile(path.join(__dirname,"client","build","index.html"));
-  })
+  // app.get("/shopkeeper", (req, res) => {
+  //   app.use(express.static(path.join(__dirname,"/client/build")));
+  //   res.sendFile(path.join(__dirname,"client","build","index.html"));
+  // })
 }
 else{
   app.get("/",function(req,res){
     res.send("Hello");
   });
 }
-
-app.listen(process.env.PORT || 5000, function (err) {
+ PORT=process.env.PORT || 3001;
+app.listen(PORT, function (err) {
   if (err) {
     console.log(err)
   } else {
-    console.log('Server successfully connected')
+    console.log(`Server successfully connected ${PORT}`)
   }
 })
